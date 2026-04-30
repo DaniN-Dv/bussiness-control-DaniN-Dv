@@ -1,16 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import "./Navbar.css";
 
 export const Navbar = () => {
+	const location = useLocation();
 
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+		<nav className="margon-navbar">
+			<div className="margon-navbar-container">
+				<Link to="/" className="margon-brand">
+					<span className="brand-text">Margon</span>
+					<span className="brand-dot">.</span>
 				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
+				
+				<div className="margon-nav-links">
+					<Link 
+						to="/" 
+						className={`margon-nav-link ${location.pathname === '/' ? 'active' : ''}`}
+					>
+						Inicio
+					</Link>
+					<Link 
+						to="/add-product" 
+						className={`margon-nav-link btn-premium ${location.pathname === '/add-product' ? 'active' : ''}`}
+					>
+						Agregar Producto
 					</Link>
 				</div>
 			</div>

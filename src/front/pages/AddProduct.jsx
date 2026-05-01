@@ -1,5 +1,7 @@
 import { useState } from "react"
 import "../styles/pages/AddProduct.css"
+import { Toaster, toast } from "sonner"
+import { useNavigate } from "react-router-dom/dist"
 
 const initialProductState = {
     "name": "",
@@ -11,6 +13,7 @@ const URL = import.meta.env.VITE_BACKEND_URL;
 export const AddProduct = () => {
 
     const [product, setProduct] = useState(initialProductState);
+    const navigate = useNavigate();
 
     const handleOnChange = ({target}) => {
         setProduct({
@@ -33,19 +36,27 @@ export const AddProduct = () => {
         })
 
         if (response.ok) {
-            alert("Producto agregado exitosamente");
+            toast.success("Producto agregado exitosamente");
             setProduct(initialProductState);
+
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
+
         } else if(response.status == 409){
-            alert("El producto ya existe")
+            toast.error("El producto ya existe")
+
         } else if(response.status == 400){
-            alert("Por favor, ingresa todos los campos")
+            toast.error("Por favor, ingresa todos los campos")
+
         } else {
-            alert("Error al agregar el producto")
+            toast.error("Error al agregar el producto")
         }
     }
 
     return (
         <div className="container mt-5">
+            <Toaster richColors position="top-center" />
             <div className="row justify-content-center">
                 <div className="col-12 col-md-8 col-lg-6">
                     <div className="card shadow-lg border-0 rounded-4 add-product-card">

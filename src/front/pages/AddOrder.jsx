@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import "../styles/pages/AddOrder.css"
+import { Toaster, toast } from "sonner"
 
 const URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -8,13 +9,11 @@ export const AddOrder = () => {
     const navigate = useNavigate();
     const [clients, setClients] = useState([]);
     const [products, setProducts] = useState([]);
-    
     const [selectedClient, setSelectedClient] = useState("");
     const [selectedProduct, setSelectedProduct] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [addedProducts, setAddedProducts] = useState([]);
 
-    // Fetch clients and products on component mount
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -39,15 +38,15 @@ export const AddOrder = () => {
 
     const handleAddToList = () => {
         if (!selectedProduct) {
-            alert("Selecciona un producto para añadir");
+            toast.error("Selecciona un producto para añadir");
             return;
         }
 
         const productObj = products.find(p => p.id === parseInt(selectedProduct));
         if (!productObj) return;
 
-        // Check if already in list, if so just update quantity
         const existingIndex = addedProducts.findIndex(p => p.product_id === productObj.id);
+
         if (existingIndex >= 0) {
             const newList = [...addedProducts];
             newList[existingIndex].quantity += parseInt(quantity);
@@ -64,7 +63,6 @@ export const AddOrder = () => {
             ]);
         }
 
-        // Reset product selection
         setSelectedProduct("");
         setQuantity(1);
     };
@@ -103,22 +101,24 @@ export const AddOrder = () => {
         });
 
         if (response.ok) {
-            alert("Pedido agregado exitosamente");
+            toast.success("Pedido agregado exitosamente");
             setSelectedClient("");
             setAddedProducts([]);
-            navigate("/");
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
         } else {
-            alert("Error al agregar el pedido");
+            toast.error("Error al agregar el pedido");
         }
     }
 
-    // Calculate total price for preview
     const calculateTotal = () => {
         return addedProducts.reduce((sum, p) => sum + (p.price * p.quantity), 0);
     };
 
     return (
         <div className="container mt-5 mb-5">
+            <Toaster richColors position="top-center" />
             <div className="row justify-content-center">
                 <div className="col-12 col-md-10 col-lg-8">
                     <div className="card shadow-lg border-0 rounded-4 add-order-card">

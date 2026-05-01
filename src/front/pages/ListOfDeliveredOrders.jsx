@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -36,18 +37,47 @@ export const ListOfDeliveredOrders = () => {
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm("¿Seguro que deseas eliminar este pedido?")) return;
-        
-        try {
-            const res = await fetch(`${URL}api/orders/${id}`, { method: "DELETE" });
-            if (res.ok) {
-                setOrders(orders.filter(order => order.id !== id));
-            } else {
-                alert("Error al eliminar la orden");
+        const result = await Swal.fire({
+            title: "¿Estás seguro de eliminar este pedido?",
+            text: "Esta acción no se puede deshacer",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const res = await fetch(`${URL}api/orders/${id}`, { 
+                    method: "DELETE" });
+                if (res.ok) {
+                    setOrders(orders.filter(order => order.id !== id));
+                    Swal.fire({
+                        title: "Pedido eliminado exitosamente",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Error al eliminar el pedido",
+                        icon: "error",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    title: "Error al eliminar el pedido",
+                    icon: "error",
+                    timer: 2000,
+                    showConfirmButton: false
+                })
             }
-        } catch (error) {
-            console.error("Error deleting order:", error);
         }
+
     };
 
     const formatDate = (isoString) => {

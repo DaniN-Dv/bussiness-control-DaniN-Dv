@@ -1,5 +1,7 @@
 import { useState } from "react"
 import "../styles/pages/AddClient.css"
+import { Toaster, toast } from "sonner"
+import { useNavigate } from "react-router-dom"
 
 const initialClientState = {
     "name": ""
@@ -10,6 +12,8 @@ const URL = import.meta.env.VITE_BACKEND_URL;
 export const AddClient = () => {
 
     const [client, setClient] = useState(initialClientState);
+
+    const navigate = useNavigate();
 
     const handleOnChange = ({target}) => {
         setClient({
@@ -30,19 +34,24 @@ export const AddClient = () => {
         })
 
         if (response.ok) {
-            alert("Cliente agregado exitosamente");
+            toast.success("Cliente agregado exitosamente");
             setClient(initialClientState);
+
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
         } else if(response.status == 409){
-            alert("Este cliente ya existe")
+            toast.error("Este cliente ya existe")
         } else if(response.status == 400){
-            alert("Por favor, ingresa todos los campos")
+            toast.error("Por favor, ingresa todos los campos")
         } else {
-            alert("Error al agregar el cliente")
+            toast.error("Error al agregar el cliente")
         }
     }
 
     return (
         <div className="container mt-5">
+            <Toaster richColors position="top-center" duration={3000} />
             <div className="row justify-content-center">
                 <div className="col-12 col-md-8 col-lg-6">
                     <div className="card shadow-lg border-0 rounded-4 add-client-card">

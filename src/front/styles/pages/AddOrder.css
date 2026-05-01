@@ -1,0 +1,32 @@
+/* AddOrder.css */
+
+.add-order-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.add-order-title {
+    color: #111827;
+    letter-spacing: -0.5px;
+}
+
+.add-order-input {
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+
+.add-order-btn {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); /* Purple gradient for orders */
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.add-order-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3) !important;
+}
+
+.add-order-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+}

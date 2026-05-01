@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import "./Navbar.css";
+import "../styles/componentes/Navbar.css";
 
 export const Navbar = () => {
 	const location = useLocation();
@@ -24,6 +24,12 @@ export const Navbar = () => {
 						className={`margon-nav-link btn-premium ${location.pathname === '/add-product' ? 'active' : ''}`}
 					>
 						Agregar Producto
+					</Link>
+					<Link 
+						to="/add-client" 
+						className={`margon-nav-link btn-premium ${location.pathname === '/add-client' ? 'active' : ''}`}
+					>
+						Agregar Cliente
 					</Link>
 				</div>
 			</div>

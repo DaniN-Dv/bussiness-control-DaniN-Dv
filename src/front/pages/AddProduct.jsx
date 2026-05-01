@@ -1,5 +1,5 @@
 import { useState } from "react"
-import "./AddProduct.css"
+import "../styles/pages/AddProduct.css"
 
 const initialProductState = {
     "name": "",

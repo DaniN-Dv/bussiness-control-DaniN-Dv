@@ -1,5 +1,3 @@
-/* Navbar.css - Premium Glassmorphism Design */
-
 .margon-navbar {
     position: sticky;
     top: 0;
@@ -23,7 +21,6 @@
     align-items: center;
 }
 
-/* Brand Styles */
 .margon-brand {
     text-decoration: none;
     display: flex;
@@ -52,7 +49,6 @@
     margin-left: 2px;
 }
 
-/* Navigation Links */
 .margon-nav-links {
     display: flex;
     gap: 1.5rem;
@@ -96,7 +92,7 @@
     font-weight: 600;
 }
 
-/* Premium Button Style for Add Product */
+
 .margon-nav-link.btn-premium {
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     color: white;
@@ -107,7 +103,7 @@
 }
 
 .margon-nav-link.btn-premium::after {
-    display: none; /* Remove underline effect for the button */
+    display: none; 
 }
 
 .margon-nav-link.btn-premium:hover {

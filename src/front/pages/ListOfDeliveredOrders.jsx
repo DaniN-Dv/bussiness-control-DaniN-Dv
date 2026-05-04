@@ -92,7 +92,7 @@ export const ListOfDeliveredOrders = () => {
         <div className="container mt-5">
             <div className="card shadow-sm border-0 rounded-4">
                 <div className="card-body p-4">
-                    <h2 className="text-center fw-bold mb-4" style={{ color: "#474747ff" }}>Lista de Pedidos</h2>
+                    <h2 className="text-center fw-bold mb-4" style={{ color: "#111827" }}>Lista de Pedidos</h2>
                     
                     <div className="d-flex justify-content-between align-items-center mb-4">
                         <p className="text-muted m-0 fw-medium">

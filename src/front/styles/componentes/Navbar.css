@@ -122,8 +122,31 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .margon-navbar-container {
-        padding: 0 1rem;
+        padding: 0.5rem 1rem;
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .margon-nav-links {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .margon-nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 0.75rem;
+        display: block;
+    }
+
+    .margon-nav-link::after {
+        display: none; /* Hide the bottom border line on mobile */
+    }
+
+    .margon-nav-link.btn-premium {
+        width: 100%;
+        display: block;
+        text-align: center;
     }
 }

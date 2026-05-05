@@ -41,9 +41,9 @@ export const Footer = () => (
 				<div className="col-6 col-md-4">
 					<h5 className="footer-title">Contacto</h5>
 					<ul className="list-unstyled text-muted" style={{ fontSize: "0.95rem" }}>
-						<li className="mb-2"><i className="fa-solid fa-location-dot me-2"></i> Ciudad de México, MX</li>
-						<li className="mb-2"><i className="fa-solid fa-envelope me-2"></i> contacto@margon.com</li>
-						<li className="mb-2"><i className="fa-solid fa-phone me-2"></i> +52 55 1234 5678</li>
+						<li className="mb-2"><i className="fa-solid fa-location-dot me-2"></i> Caracas, Venezuela</li>
+						<li className="mb-2"><i className="fa-solid fa-envelope me-2"></i> ventasmargon@gmail.com</li>
+						<li className="mb-2"><i className="fa-solid fa-phone me-2"></i> +58 412 757 8506</li>
 					</ul>
 				</div>
 			</div>

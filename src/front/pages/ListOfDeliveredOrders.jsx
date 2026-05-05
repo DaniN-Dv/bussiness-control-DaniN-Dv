@@ -50,8 +50,9 @@ export const ListOfDeliveredOrders = () => {
 
         if (result.isConfirmed) {
             try {
-                const res = await fetch(`${URL}api/orders/${id}`, { 
-                    method: "DELETE" });
+                const res = await fetch(`${URL}api/orders/${id}`, {
+                    method: "DELETE"
+                });
                 if (res.ok) {
                     setOrders(orders.filter(order => order.id !== id));
                     Swal.fire({
@@ -90,84 +91,82 @@ export const ListOfDeliveredOrders = () => {
 
     return (
         <div className="container mt-5">
-            <div className="card shadow-sm border-0 rounded-4">
-                <div className="card-body p-4">
-                    <h2 className="text-center fw-bold mb-4" style={{ color: "#111827" }}>Lista de Pedidos</h2>
+            <div className="card border rounded-3 shadow-none">
+                <div className="card-body p-4 p-md-5">
+                    <h2 className="text-center fw-light mb-5" style={{ color: "#111827", letterSpacing: "-0.5px" }}>Lista de Pedidos</h2>
                     
-                    <div className="d-flex justify-content-between align-items-center mb-4">
-                        <p className="text-muted m-0 fw-medium">
-                            <i className="fa-regular fa-calendar me-2"></i>
-                            Hoy es: <span className="text-dark text-capitalize">{todayDate}</span>
+                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-5 border-bottom pb-3 gap-3">
+                        <p className="text-muted m-0 small">
+                            {todayDate}
                         </p>
-                        <Link className="btn text-white rounded-pill px-4 shadow-sm" style={{ background: "linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)" }} to="/add-order">
-                            <i className="fa-solid fa-plus me-2"></i> Agregar pedido
+                        <Link className="btn btn-dark rounded-pill px-4 text-white w-100 w-md-auto text-center" style={{ fontSize: "0.9rem" }} to="/add-order">
+                            <i className="fa-solid fa-plus me-2"></i> Nuevo Pedido
                         </Link>
                     </div>
 
-                    <div className="table-responsive">
-                        <table className="table table-hover align-middle">
-                            <thead className="table-light">
+                    {/* Desktop View (Table) */}
+                    <div className="table-responsive d-none d-md-block">
+                        <table className="table table-borderless align-middle" style={{ fontSize: "0.95rem" }}>
+                            <thead className="border-bottom text-muted">
                                 <tr>
-                                    <th>Cliente</th>
-                                    <th>Productos</th>
-                                    <th className="text-center">Total</th>
-                                    <th>Fecha de Entrega</th>
-                                    <th>Fecha de Pago</th>
-                                    <th className="text-center">Estado</th>
-                                    <th className="text-center">Acciones</th>
+                                    <th className="fw-normal pb-3">Cliente</th>
+                                    <th className="fw-normal pb-3">Productos</th>
+                                    <th className="text-center fw-normal pb-3">Total</th>
+                                    <th className="fw-normal pb-3">Entrega</th>
+                                    <th className="fw-normal pb-3">Pago</th>
+                                    <th className="text-center fw-normal pb-3">Estado</th>
+                                    <th className="text-end fw-normal pb-3">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {orders.length === 0 ? (
                                     <tr>
-                                        <td colSpan="8" className="text-center py-4 text-muted">No hay pedidos registrados</td>
+                                        <td colSpan="7" className="text-center py-5 text-muted small">No hay pedidos registrados</td>
                                     </tr>
                                 ) : (
                                     orders.map(order => (
-                                        <tr key={order.id}>
-                                            <td className="fw-medium">{order.client_name}</td>
-                                            <td>
-                                                <ul className="list-unstyled m-0 small">
+                                        <tr key={order.id} className="border-bottom">
+                                            <td className="fw-medium text-dark py-4">{order.client_name}</td>
+                                            <td className="py-4">
+                                                <ul className="list-unstyled m-0 text-muted">
                                                     {order.products?.map((p, idx) => (
-                                                        <li key={idx}>
-                                                            <span className="fw-bold">{p.quantity}x</span> {p.product_name}
+                                                        <li key={idx} className="mb-1">
+                                                            <span>{p.quantity} × {p.product_name}</span>
                                                         </li>
                                                     ))}
                                                 </ul>
                                             </td>
-                                            <td className="text-center fw-bold text-success">
+                                            <td className="text-center text-dark py-4">
                                                 ${order.products?.reduce((sum, p) => sum + (p.price * p.quantity), 0)}
                                             </td>
-                                            <td className="text-muted small">{formatDate(order.delivered_date)}</td>
-                                            <td className="text-muted small">
-                                                {order.delivered ? <span className="text-success">{formatDate(order.payment_date)}</span> : <span>Pendiente</span>}
+                                            <td className="text-muted py-4">{formatDate(order.delivered_date)}</td>
+                                            <td className="text-muted py-4">
+                                                {order.delivered ? formatDate(order.payment_date) : "-"}
                                             </td>
-                                            <td className="text-center">
+                                            <td className="text-center py-4">
                                                 {order.delivered ? (
-                                                    <span className="badge bg-success rounded-pill px-3">Pagado</span>
+                                                    <span className="text-success small fw-medium"><i className="fa-solid fa-circle me-1" style={{ fontSize: "6px", verticalAlign: "middle" }}></i> Pagado</span>
                                                 ) : (
-                                                    <span className="badge bg-warning text-dark rounded-pill px-3">Pendiente</span>
+                                                    <span className="text-warning small fw-medium"><i className="fa-solid fa-circle me-1" style={{ fontSize: "6px", verticalAlign: "middle" }}></i> Pendiente</span>
                                                 )}
                                             </td>
-                                            <td className="text-center">
-                                                <div className="d-flex justify-content-center gap-2">
+                                            <td className="text-end py-4">
+                                                <div className="d-flex justify-content-end gap-3">
                                                     {!order.delivered && (
                                                         <button 
-                                                            className="btn btn-sm btn-outline-success rounded-circle" 
+                                                            className="btn btn-link text-success p-0 text-decoration-none small" 
                                                             onClick={() => handlePay(order.id)}
                                                             title="Marcar como pagado"
-                                                            style={{ width: "32px", height: "32px", padding: 0 }}
                                                         >
-                                                            ✓
+                                                            Pagar
                                                         </button>
                                                     )}
                                                     <button 
-                                                        className="btn btn-sm btn-outline-danger rounded-circle" 
+                                                        className="btn btn-link text-danger p-0 text-decoration-none small" 
                                                         onClick={() => handleDelete(order.id)}
                                                         title="Eliminar pedido"
-                                                        style={{ width: "32px", height: "32px", padding: 0 }}
                                                     >
-                                                        🗑️
+                                                        Eliminar
                                                     </button>
                                                 </div>
                                             </td>
@@ -176,6 +175,77 @@ export const ListOfDeliveredOrders = () => {
                                 )}
                             </tbody>
                         </table>
+                    </div>
+
+                    {/* Mobile View (Cards) */}
+                    <div className="d-block d-md-none">
+                        {orders.length === 0 ? (
+                            <div className="text-center py-5 text-muted small border rounded-3">
+                                No hay pedidos registrados
+                            </div>
+                        ) : (
+                            orders.map(order => (
+                                <div key={order.id} className="card border mb-4 rounded-3 shadow-none">
+                                    <div className="card-body p-4">
+                                        <div className="d-flex justify-content-between align-items-center mb-3">
+                                            <h6 className="fw-medium m-0 text-dark">{order.client_name}</h6>
+                                            {order.delivered ? (
+                                                <span className="text-success small fw-medium"><i className="fa-solid fa-circle me-1" style={{ fontSize: "6px", verticalAlign: "middle" }}></i> Pagado</span>
+                                            ) : (
+                                                <span className="text-warning small fw-medium"><i className="fa-solid fa-circle me-1" style={{ fontSize: "6px", verticalAlign: "middle" }}></i> Pendiente</span>
+                                            )}
+                                        </div>
+                                        <div className="mb-4 text-muted small">
+                                            <div className="d-flex justify-content-between mb-1">
+                                                <span>Entrega</span>
+                                                <span className="text-dark">{formatDate(order.delivered_date)}</span>
+                                            </div>
+                                            {order.delivered && (
+                                                <div className="d-flex justify-content-between">
+                                                    <span>Pago</span>
+                                                    <span className="text-dark">{formatDate(order.payment_date)}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        
+                                        <div className="border-top border-bottom py-3 mb-4">
+                                            <ul className="list-unstyled mb-0 small text-muted">
+                                                {order.products?.map((p, idx) => (
+                                                    <li key={idx} className="d-flex justify-content-between mb-2 last-child-mb-0">
+                                                        <span>{p.quantity} × {p.product_name}</span>
+                                                        <span>${p.price * p.quantity}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        
+                                        <div className="d-flex justify-content-between align-items-center mb-4">
+                                            <span className="text-muted small">Total</span>
+                                            <span className="fw-medium text-dark">
+                                                ${order.products?.reduce((sum, p) => sum + (p.price * p.quantity), 0)}
+                                            </span>
+                                        </div>
+                                        
+                                        <div className="d-flex gap-2 mt-3 w-100">
+                                            {!order.delivered && (
+                                                <button
+                                                    className="btn btn-dark rounded-pill flex-grow-1 py-2"
+                                                    onClick={() => handlePay(order.id)}
+                                                >
+                                                    Pagar
+                                                </button>
+                                            )}
+                                            <button
+                                                className="btn btn-outline-danger rounded-pill flex-grow-1 py-2"
+                                                onClick={() => handleDelete(order.id)}
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
             </div>
